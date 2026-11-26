@@ -975,7 +975,7 @@ function showStill(img){
  c.classList.remove('hidden');$('camMsg').classList.add('hidden');$('hatTools').classList.remove('hidden');$('autoBtn').classList.add('hidden');
  autoMode=false;if(!hats.length)resetHats();
  $('fileBtn').classList.add('hidden');$('useStillBtn').classList.remove('hidden');$('retakeBtn').classList.remove('hidden');
- $('camHint').textContent='털모자와 목도리를 각각 끌어서 맞춰 주세요';
+ $('camHint').textContent='털모자를 끌어서 머리 위에 올려 주세요';
 }
 $('useStillBtn').onclick=function(){audioCtx();if(stillImg){shutter();capture(stillImg,stillImg.naturalWidth,stillImg.naturalHeight,false);}};
 
@@ -1054,15 +1054,14 @@ ov.addEventListener('pointerdown',function(e){
  for(var pass=0;pass<2;pass++)for(var i=hats.length-1;i>=0;i--){   // 털모자 먼저, 그다음 목도리
   var h=hats[i],part=pass===0?'hat':'scarf';
   if(!inside(part==='hat'?hatBox(h,W,H):scarfBox(h,W,H)))continue;
-  if(h.sx==null){h.sx=h.x;h.sy=h.y;}   // 이제부터 털모자와 목도리를 따로 움직임
-  var ox=part==='hat'?h.x:h.sx,oy=part==='hat'?h.y:h.sy;
-  dragging={i:i,part:part,dx:ox-p.x,dy:oy-p.y};selHat=i;setManual();ov.setPointerCapture(e.pointerId);e.preventDefault();return;
+  delete h.sx;delete h.sy;   // 털모자와 목도리는 한 세트로 함께 움직임
+  dragging={i:i,part:'set',dx:h.x-p.x,dy:h.y-p.y};selHat=i;setManual();ov.setPointerCapture(e.pointerId);e.preventDefault();return;
  }
 });
 ov.addEventListener('pointermove',function(e){if(!dragging)return;var p=ptr(e),h=hats[dragging.i];if(!h)return;var nx=Math.min(1,Math.max(0,p.x+dragging.dx));
  if(dragging.part==='scarf'){h.sx=nx;h.sy=Math.min(1.1,Math.max(-.5,p.y+dragging.dy));}else{h.x=nx;h.y=Math.min(1.1,Math.max(.05,p.y+dragging.dy));}});
 ['pointerup','pointercancel'].forEach(function(t){ov.addEventListener(t,function(){dragging=null;});});
-function setManual(){if(autoMode&&faceReady){autoMode=false;$('autoBtn').classList.remove('hidden');}autoMode=false;$('camHint').textContent='털모자와 목도리를 각각 끌어서 맞춰 주세요';}
+function setManual(){if(autoMode&&faceReady){autoMode=false;$('autoBtn').classList.remove('hidden');}autoMode=false;$('camHint').textContent='털모자를 끌어서 머리 위에 올려 주세요';}
 $('addHat').onclick=function(){setManual();if(hats.length<6){var w=hats.length?hats[hats.length-1].w:.3;hats.push({x:.25+Math.random()*.5,y:.35,w:w});selHat=hats.length-1;}};
 $('delHat').onclick=function(){setManual();if(hats.length){hats.splice(selHat>=0&&selHat<hats.length?selHat:hats.length-1,1);selHat=hats.length-1;}};
 $('bigHat').onclick=function(){setManual();hats.forEach(function(h,i){if(selHat<0||i===selHat||hats.length===1)h.w=Math.min(.8,h.w*1.12);});};
@@ -1073,7 +1072,7 @@ $('autoBtn').onclick=function(){autoMode=true;$('autoBtn').classList.add('hidden
 var faceDet=null,faceReady=false,faceLoading=false,lastFaceT=0;
 function initFace(){
  if(!AUTO_FACE||faceReady||faceLoading)return;
- faceLoading=true;$('camHint').textContent='털모자와 목도리를 각각 끌어서 맞춰 주세요';
+ faceLoading=true;$('camHint').textContent='털모자를 끌어서 머리 위에 올려 주세요';
  var BASE='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14';
  try{
   import(BASE+'/vision_bundle.mjs').then(function(mp){
