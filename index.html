@@ -6,7 +6,7 @@
 <title>마음 손난로</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Song+Myung&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&family=Diphylleia&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Song+Myung&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&family=Diphylleia&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700;900&family=Nanum+Brush+Script&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fbf0e3; --paper:#fffaf3; --ink:#3a2618; --muted:#8c6a50;
@@ -115,7 +115,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minm
   <div class="garland"></div>
   <main>
     <section class="panel">
-      <div class="ptitle"><b>2</b>귀마개 하고 찰칵</div>
+      <div class="ptitle"><b>2</b>털모자 쓰고 찰칵</div>
       <div class="stage">
         <div class="cam" id="cam">
           <video id="video" playsinline autoplay muted></video>
@@ -124,8 +124,8 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minm
           <div class="camhint" id="camHint"></div>
           <div class="hattools" id="hatTools">
             <button type="button" id="autoBtn" class="hidden">얼굴 자동 맞춤</button>
-            <button type="button" id="addHat">＋ 귀마개</button>
-            <button type="button" id="delHat">－ 귀마개</button>
+            <button type="button" id="addHat">＋ 털모자</button>
+            <button type="button" id="delHat">－ 털모자</button>
             <button type="button" id="bigHat">크게</button>
             <button type="button" id="smallHat">작게</button>
           </div>
@@ -176,7 +176,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minm
 var CREDIT        = '';   // 영수증 맨 아래 · 화면 오른쪽 위에 넣을 문구 (비워 두면 표시 안 함)
 var KO_TITLE      = '마음 손난로';                    // 화면 위 한글 제목
 var EN_TITLE      = 'Warm Poems';                     // 화면·영수증 위 영어 필기체 제목
-var SUB_TITLE     = '귀마개 하고 찰칵, 시 하나 추천 선물';  // 화면 부제 (영수증에는 안 나옴)
+var SUB_TITLE     = '털모자 쓰고 찰칵, 시 하나 추천 선물';  // 화면 부제 (영수증에는 안 나옴)
 var END_LINE      = 'Stay Warm, Read a Poem';          // 영수증 아래 필기체 문구
 var WARMER_HEAD   = '마음 손난로 1매 · 시 하나 추천 선물';  // 영수증 포장 표시 제목
 /* 영수증의 손난로 포장 표시 — [항목, 내용] 자유롭게 바꾸세요 */
@@ -196,7 +196,7 @@ var RECEIPT_FOOTER = '수내고등학교 도서관';   // 출력물 맨 아래 �
 var VOICE_ON      = true;    // 녹음 파일을 못 쓸 때 기계 음성으로 숫자 읽기
 var COUNT_WORDS   = ['하나','둘','셋'];   // 읽을 말 (예: ['일','이','삼'] 또는 ['셋','둘','하나'])
 var SHUTTER_ON    = true;    // 찍을 때 '찰칵' 효과음
-var AUTO_FACE     = true;    // 얼굴을 찾아 귀마개를 자동으로 씌우기 (안 되면 손으로 끌어서 맞춤)
+var AUTO_FACE     = true;    // 얼굴을 찾아 털모자를 자동으로 씌우기 (안 되면 손으로 끌어서 맞춤)
 
 /* 영수증 프린터 */
 var PRINTER_NAME = '';       // 블루투스 프린터 이름 일부 (비우면 CPP·Printer·POS 이름을 자동으로 찾음)
@@ -886,7 +886,7 @@ function updateSnap(){
  $('snapBtn').disabled=!ok;
  $('snapLabel').textContent=ok?'사진 찍기':'먼저 기분을 골라 주세요';
  $('fileBtn').disabled=!ok;
- $('hint').textContent=ok?'귀마개를 귀에 맞추고 [사진 찍기]를 눌러 주세요':'';
+ $('hint').textContent=ok?'털모자를 머리 위에 맞추고 [사진 찍기]를 눌러 주세요':'';
 }
 function poemsFor(m){
  var keys=m.poems==='ALL'?Object.keys(POEMS):m.poems.filter(function(k){return POEMS[k];});
@@ -950,7 +950,7 @@ function useFileFallback(reason){
  var why=CAM_WHY[reason]||'화면 안에서 카메라를 켜지 못했어요.';
  var m=$('camMsg');m.classList.remove('hidden');
  m.innerHTML='<div style="font-size:1.3em;font-weight:700">아래 [카메라로 찍기] 버튼으로<br>사진을 찍어 주세요</div>'+
-  '<div style="opacity:.75;font-size:.85em">찍은 뒤 귀마개를 손가락으로 끌어 귀에 맞춰 주세요.<br>'+esc(why)+(reason?' ('+esc(reason)+')':'')+'</div>'+
+  '<div style="opacity:.75;font-size:.85em">찍은 뒤 털모자를 손가락으로 끌어 머리 위에 맞춰 주세요.<br>'+esc(why)+(reason?' ('+esc(reason)+')':'')+'</div>'+
   '<button type="button" id="reconBtn" style="margin-top:6px;padding:10px 18px;border-radius:10px;border:1px solid rgba(255,250,240,.7);background:transparent;color:#fff6e6;font-size:1em">카메라 다시 연결</button>';
  $('reconBtn').onclick=function(){startCamera();};
  $('snapBtn').classList.add('hidden');$('fileBtn').classList.remove('hidden');$('useStillBtn').classList.add('hidden');
@@ -966,14 +966,14 @@ $('fileInput').onchange=function(e){
  r.onload=function(){var img=new Image();img.onload=function(){showStill(img);};img.src=r.result;};
  r.readAsDataURL(f);
 };
-/* 카메라 앱으로 찍은 사진: 화면에 보여 주고 귀마개를 손으로 맞춘 뒤 [이 사진으로 완성] */
+/* 카메라 앱으로 찍은 사진: 화면에 보여 주고 털모자를 손으로 맞춘 뒤 [이 사진으로 완성] */
 function showStill(img){
  stillImg=img;source='still';
  var c=$('still');c.width=PHOTO_W;c.height=PHOTO_H;drawCover(c.getContext('2d'),img,img.naturalWidth,img.naturalHeight,PHOTO_W,PHOTO_H,false);
  c.classList.remove('hidden');$('camMsg').classList.add('hidden');$('hatTools').classList.remove('hidden');$('autoBtn').classList.add('hidden');
  autoMode=false;if(!hats.length)resetHats();
  $('fileBtn').classList.add('hidden');$('useStillBtn').classList.remove('hidden');$('retakeBtn').classList.remove('hidden');
- $('camHint').textContent='귀마개를 끌어서 귀에 맞춰 주세요';
+ $('camHint').textContent='털모자를 끌어서 머리 위에 올려 주세요';
 }
 $('useStillBtn').onclick=function(){audioCtx();if(stillImg){shutter();capture(stillImg,stillImg.naturalWidth,stillImg.naturalHeight,false);}};
 
@@ -984,28 +984,35 @@ function drawCover(ctx,src,sw,sh,W,H,mirror){
  ctx.drawImage(src,(sw-cw)/2,(sh-ch)/2,cw,ch,0,0,W,H);ctx.restore();
 }
 
-/* ---------------- 귀마개 ----------------
+/* ---------------- 빨강 털모자 ----------------
    좌표는 사진 비율(0~1): x=얼굴 가운데, y=이마 윗선, w=너비 */
 var hats=[],autoMode=true,dragging=null,selHat=-1;
 function resetHats(){hats=[{x:.5,y:.33,w:.3}];selHat=0;}
-function santaHat(x,cx,by,w){   // (이름은 그대로지만 귀마개를 그립니다)
- var py=by+w*.3,dx=w*.37,r=w*.13;
- x.save();x.lineCap='round';
- x.strokeStyle='#5a2c12';x.lineWidth=Math.max(2,w*.055);
- x.beginPath();x.moveTo(cx-dx,py-r*.6);x.bezierCurveTo(cx-dx*1.05,by-w*.42,cx+dx*1.05,by-w*.42,cx+dx,py-r*.6);x.stroke();
- x.strokeStyle='rgba(255,255,255,.35)';x.lineWidth=Math.max(1,w*.015);
- x.beginPath();x.moveTo(cx-dx*.8,by-w*.12);x.bezierCurveTo(cx-dx*.7,by-w*.36,cx+dx*.7,by-w*.36,cx+dx*.8,by-w*.12);x.stroke();
- [-1,1].forEach(function(sd){
-  var ex=cx+sd*dx;
-  x.fillStyle='#e0702c';
-  for(var k=0;k<10;k++){var a=k/10*Math.PI*2;x.beginPath();x.arc(ex+Math.cos(a)*r*.82,py+Math.sin(a)*r*.82,r*.34,0,7);x.fill();}
-  x.beginPath();x.arc(ex,py,r*.9,0,7);x.fill();
-  x.fillStyle='#f4a467';x.beginPath();x.arc(ex-r*.2,py-r*.22,r*.5,0,7);x.fill();
-  x.fillStyle='rgba(255,255,255,.55)';x.beginPath();x.arc(ex-r*.35,py-r*.38,r*.16,0,7);x.fill();
- });
+function santaHat(x,cx,by,w){   // 빨강 털모자 (by=모자 테두리 가운데, w=너비)
+ x.save();
+ // 몸통(둥근 돔)
+ x.fillStyle='#c62828';x.beginPath();
+ x.moveTo(cx-w*.47,by);x.bezierCurveTo(cx-w*.5,by-w*.5,cx-w*.25,by-w*.64,cx,by-w*.64);
+ x.bezierCurveTo(cx+w*.25,by-w*.64,cx+w*.5,by-w*.5,cx+w*.47,by);x.closePath();x.fill();
+ // 뜨개 무늬(세로 골)
+ x.strokeStyle='rgba(120,10,10,.45)';x.lineWidth=Math.max(1,w*.012);
+ for(var k=-3;k<=3;k++){var sx=cx+k*w*.12;x.beginPath();x.moveTo(sx,by-w*.02);x.quadraticCurveTo(cx+k*w*.1,by-w*.4,cx+k*w*.05,by-w*.6);x.stroke();}
+ // 그림자
+ x.fillStyle='rgba(0,0,0,.12)';x.beginPath();x.moveTo(cx+w*.15,by);x.bezierCurveTo(cx+w*.4,by-w*.2,cx+w*.4,by-w*.45,cx+w*.2,by-w*.6);
+ x.bezierCurveTo(cx+w*.45,by-w*.55,cx+w*.5,by-w*.3,cx+w*.47,by);x.closePath();x.fill();
+ // 접은 테두리(골지)
+ var bt=by-w*.11,bh=w*.22,bl=cx-w*.52,bw=w*1.04;
+ x.fillStyle='#a51d1d';x.beginPath();if(x.roundRect)x.roundRect(bl,bt,bw,bh,w*.06);else x.rect(bl,bt,bw,bh);x.fill();
+ x.strokeStyle='rgba(255,255,255,.22)';x.lineWidth=Math.max(1,w*.016);
+ for(var r=bl+w*.04;r<bl+bw-w*.02;r+=w*.055){x.beginPath();x.moveTo(r,bt+w*.03);x.lineTo(r,bt+bh-w*.03);x.stroke();}
+ // 방울(폼폼)
+ var py=by-w*.7,pr=w*.13;x.fillStyle='#f3f0ec';
+ for(var a=0;a<12;a++){var an=a/12*Math.PI*2;x.beginPath();x.arc(cx+Math.cos(an)*pr*.75,py+Math.sin(an)*pr*.75,pr*.42,0,7);x.fill();}
+ x.beginPath();x.arc(cx,py,pr*.85,0,7);x.fill();
+ x.fillStyle='rgba(0,0,0,.08)';x.beginPath();x.arc(cx+pr*.25,py+pr*.25,pr*.5,0,7);x.fill();
  x.restore();
 }
-function hatBox(h,W,H){var w=h.w*W,cx=h.x*W,by=h.y*H;return {l:cx-w*.56,r:cx+w*.56,t:by-w*.4,b:by+w*.48};}
+function hatBox(h,W,H){var w=h.w*W,cx=h.x*W,by=h.y*H;return {l:cx-w*.56,r:cx+w*.56,t:by-w*.86,b:by+w*.13};}
 function drawHats(ctx,W,H){hats.forEach(function(h){santaHat(ctx,h.x*W,h.y*H,h.w*W);});}
 var ov=$('overlay'),ovx=ov.getContext('2d');
 function sizeOverlay(){var r=ov.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);var w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);if(ov.width!==w||ov.height!==h){ov.width=w;ov.height=h;}}
@@ -1022,25 +1029,25 @@ ov.addEventListener('pointerdown',function(e){
 });
 ov.addEventListener('pointermove',function(e){if(!dragging)return;var p=ptr(e),h=hats[dragging.i];h.x=Math.min(1,Math.max(0,p.x+dragging.dx));h.y=Math.min(1.1,Math.max(.05,p.y+dragging.dy));});
 ['pointerup','pointercancel'].forEach(function(t){ov.addEventListener(t,function(){dragging=null;});});
-function setManual(){if(autoMode&&faceReady){autoMode=false;$('autoBtn').classList.remove('hidden');}autoMode=false;$('camHint').textContent='귀마개를 끌어서 귀에 맞춰 주세요';}
+function setManual(){if(autoMode&&faceReady){autoMode=false;$('autoBtn').classList.remove('hidden');}autoMode=false;$('camHint').textContent='털모자를 끌어서 머리 위에 올려 주세요';}
 $('addHat').onclick=function(){setManual();if(hats.length<6){var w=hats.length?hats[hats.length-1].w:.3;hats.push({x:.25+Math.random()*.5,y:.35,w:w});selHat=hats.length-1;}};
 $('delHat').onclick=function(){setManual();if(hats.length){hats.splice(selHat>=0&&selHat<hats.length?selHat:hats.length-1,1);selHat=hats.length-1;}};
 $('bigHat').onclick=function(){setManual();hats.forEach(function(h,i){if(selHat<0||i===selHat||hats.length===1)h.w=Math.min(.8,h.w*1.12);});};
 $('smallHat').onclick=function(){setManual();hats.forEach(function(h,i){if(selHat<0||i===selHat||hats.length===1)h.w=Math.max(.08,h.w/1.12);});};
-$('autoBtn').onclick=function(){autoMode=true;$('autoBtn').classList.add('hidden');$('camHint').textContent='얼굴을 찾으면 귀마개가 자동으로 씌워져요';};
+$('autoBtn').onclick=function(){autoMode=true;$('autoBtn').classList.add('hidden');$('camHint').textContent='얼굴을 찾으면 털모자가 자동으로 씌워져요';};
 
 /* 얼굴 자동 인식 (인터넷으로 MediaPipe를 불러옴. 안 되면 손으로 맞추기만 사용) */
 var faceDet=null,faceReady=false,faceLoading=false,lastFaceT=0;
 function initFace(){
  if(!AUTO_FACE||faceReady||faceLoading)return;
- faceLoading=true;$('camHint').textContent='귀마개를 끌어서 귀에 맞춰 주세요';
+ faceLoading=true;$('camHint').textContent='털모자를 끌어서 머리 위에 올려 주세요';
  var BASE='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14';
  try{
   import(BASE+'/vision_bundle.mjs').then(function(mp){
    return mp.FilesetResolver.forVisionTasks(BASE+'/wasm').then(function(fs){
     return mp.FaceDetector.createFromOptions(fs,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite',delegate:'GPU'},runningMode:'VIDEO',minDetectionConfidence:.5});
    });
-  }).then(function(d){faceDet=d;faceReady=true;if(autoMode)$('camHint').textContent='얼굴을 찾으면 귀마개가 자동으로 씌워져요';faceLoop();})
+  }).then(function(d){faceDet=d;faceReady=true;if(autoMode)$('camHint').textContent='얼굴을 찾으면 털모자가 자동으로 씌워져요';faceLoop();})
    .catch(function(){faceLoading=false;});
  }catch(e){faceLoading=false;}
 }
@@ -1208,7 +1215,7 @@ function renderReceipt(){
    Promise.all([
     document.fonts.load("80px 'Great Vibes'",EN_TITLE+END_LINE),
     document.fonts.load("46px 'Diphylleia'",all),document.fonts.load("46px 'Song Myung'",all),document.fonts.load("700 26px 'Gowun Batang'",all),
-    document.fonts.load("40px 'Nanum Pen Script'",all),document.fonts.load("700 17px 'Noto Sans KR'",all),document.fonts.load("900 30px 'Noto Sans KR'",all),document.fonts.load("700 34px 'Gaegu'",all),document.fonts.load("500 17px 'Noto Sans KR'",all)
+    document.fonts.load("40px 'Nanum Pen Script'",all),document.fonts.load("700 17px 'Noto Sans KR'",all),document.fonts.load("900 30px 'Noto Sans KR'",all),document.fonts.load("700 34px 'Gaegu'",all),document.fonts.load("700 26px 'Noto Serif KR'",all),document.fonts.load("900 36px 'Noto Serif KR'",all),document.fonts.load("50px 'Nanum Brush Script'",all),document.fonts.load("500 17px 'Noto Sans KR'",all)
    ]).then(go,go);
    setTimeout(go,3000);
   }else go();
@@ -1282,7 +1289,7 @@ function semanticLines(s,maxW,measure){
 function drawReceipt(){
  var W=576,P=24,tmp=document.createElement('canvas');tmp.width=W;tmp.height=6000;
  var ctx=tmp.getContext('2d'),y=0,poem=POEMS[state.poemKey];
- var SERIF="'Gowun Batang','Noto Serif KR',serif",SANS="'Noto Sans KR',sans-serif",PEN="'Nanum Pen Script',cursive",SCRIPT="'Great Vibes',cursive",TITLE="'Diphylleia','Song Myung',serif";
+ var SERIF="'Noto Serif KR','Gowun Batang',serif",BRUSH="'Nanum Brush Script','Nanum Pen Script',cursive",SANS="'Noto Sans KR',sans-serif",PEN="'Nanum Pen Script',cursive",SCRIPT="'Great Vibes',cursive",TITLE="'Diphylleia','Song Myung',serif";
  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,tmp.height);ctx.fillStyle='#000';ctx.strokeStyle='#000';
  ctx.textBaseline='top';ctx.textAlign='center';ctx.lineCap='round';ctx.lineJoin='round';
  function c(s,f,lh){ctx.font=f;ctx.textAlign='center';ctx.fillText(s,W/2,y);y+=lh;}
@@ -1342,12 +1349,12 @@ function drawReceipt(){
  // 시 전문
  c('오늘의 기분 · '+state.mood.label,"700 18px "+SANS,30);
  c('— 오늘 당신에게 도착한 시 —',"700 19px "+SANS,46);
- fit('「'+poem.title+'」',34,"900 {px}px "+SANS,54);
+ fit('「'+poem.title+'」',36,"900 {px}px "+SERIF,58);
  var lines=poem.text.split('\n'),longest=0;
- ctx.font="700 26px "+SANS;lines.forEach(function(l){longest=Math.max(longest,ctx.measureText(l).width);});
- var psize=longest>W-P*2?24:26,plh=Math.round(psize*1.6);
- lines.forEach(function(l){if(!l.trim()){y+=Math.round(plh*.45);return;}var y0=y;wrap(l,"700 {px}px "+SANS,psize,plh);if(y-y0>plh)y+=Math.round(plh*.32);});   // 긴 줄이 나뉘면 원래 행 사이를 조금 띄움
- y+=10;c(poem.poet,"700 22px "+SANS,44);
+ ctx.font="700 26px "+SERIF;lines.forEach(function(l){longest=Math.max(longest,ctx.measureText(l).width);});
+ var psize=longest>W-P*2?24:26,plh=Math.round(psize*1.65);
+ lines.forEach(function(l){if(!l.trim()){y+=Math.round(plh*.45);return;}var y0=y;wrap(l,"700 {px}px "+SERIF,psize,plh);if(y-y0>plh)y+=Math.round(plh*.32);});   // 긴 줄이 나뉘면 원래 행 사이를 조금 띄움
+ y+=10;c(poem.poet,"700 24px "+SERIF,46);
  divider();y+=12;
  // 필사 칸
  var ix=W/2-148,iy=y+3;ctx.save();ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(ix,iy+22);ctx.lineTo(ix+20,iy+2);ctx.lineTo(ix+26,iy+8);ctx.lineTo(ix+6,iy+28);ctx.closePath();ctx.stroke();
@@ -1358,16 +1365,16 @@ function drawReceipt(){
  y+=64;   /* '필사한 사람' 줄은 삭제함 */
  // 오늘의 행운 한 줄
  var bx=P+6,bw=W-P*2-12,bt=y;
- var LUCKY_FONT="'Gaegu','Noto Sans KR',sans-serif";var lkLines=[state.lucky];
- var lpx=36;for(;lpx>=26;lpx--){ctx.font="700 "+lpx+"px "+LUCKY_FONT;if(ctx.measureText(state.lucky).width<=bw-36)break;}
- if(lpx<26){lpx=32;ctx.font="700 "+lpx+"px "+LUCKY_FONT;lkLines=semanticLines(state.lucky,bw-36,function(t){return ctx.measureText(t).width;});}
- var bh=78+lkLines.length*Math.round(lpx*1.25);
+ var LUCKY_FONT=BRUSH;var lkLines=[state.lucky];
+ var lpx=50;for(;lpx>=38;lpx--){ctx.font=lpx+"px "+LUCKY_FONT;if(ctx.measureText(state.lucky).width<=bw-40)break;}
+ if(lpx<38){lpx=46;ctx.font=lpx+"px "+LUCKY_FONT;lkLines=semanticLines(state.lucky,bw-40,function(t){return ctx.measureText(t).width;});}
+ var bh=70+lkLines.length*Math.round(lpx*1.15);
  ctx.save();ctx.lineWidth=2;ctx.setLineDash([3,5]);ctx.strokeRect(bx,bt,bw,bh);ctx.restore();
  ctx.save();ctx.lineWidth=1.2;ctx.strokeRect(bx+6,bt+6,bw-12,bh-12);ctx.restore();
  ctx.fillStyle='#fff';ctx.fillRect(W/2-120,bt-14,240,28);ctx.fillStyle='#000';
  heart(W/2-104,bt+1,8);heart(W/2+104,bt+1,8);
  ctx.font="900 19px "+SANS;ctx.textAlign='center';ctx.fillText('오늘의 행운 한 줄',W/2,bt-12);
- y=bt+40;ctx.font="700 "+lpx+"px "+LUCKY_FONT;lkLines.forEach(function(l){ctx.fillText(l,W/2,y);y+=Math.round(lpx*1.25);});
+ y=bt+40;ctx.font=lpx+"px "+LUCKY_FONT;lkLines.forEach(function(l){ctx.fillText(l,W/2,y);y+=Math.round(lpx*1.15);});
  y=bt+bh+36;
  // 사진
  var pw=W-P*2-16,ph=Math.round(pw*PHOTO_H/PHOTO_W),px=(W-pw)/2;y+=8;
@@ -1377,7 +1384,7 @@ function drawReceipt(){
  // 맺음
  fit(END_LINE,38,"{px}px "+SCRIPT,52);
  if(CREDIT)fit(CREDIT,30,"{px}px "+TITLE,46);
- if(RECEIPT_FOOTER){y+=4;fit(RECEIPT_FOOTER,28,"900 {px}px "+SANS,44);}
+ if(RECEIPT_FOOTER){y+=4;fit(RECEIPT_FOOTER,32,"900 {px}px "+SERIF,48);}
  y+=6;tearEdge('');y+=6;
  var out=document.createElement('canvas');out.width=W;out.height=y;out.getContext('2d').drawImage(tmp,0,0);
  return out;
