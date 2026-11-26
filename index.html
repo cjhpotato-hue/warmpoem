@@ -115,7 +115,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minm
   <div class="garland"></div>
   <main>
     <section class="panel">
-      <div class="ptitle"><b>2</b>털모자 쓰고 찰칵</div>
+      <div class="ptitle"><b>2</b>털모자·목도리 하고 찰칵</div>
       <div class="stage">
         <div class="cam" id="cam">
           <video id="video" playsinline autoplay muted></video>
@@ -176,7 +176,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minm
 var CREDIT        = '';   // 영수증 맨 아래 · 화면 오른쪽 위에 넣을 문구 (비워 두면 표시 안 함)
 var KO_TITLE      = '마음 손난로';                    // 화면 위 한글 제목
 var EN_TITLE      = 'Warm Poems';                     // 화면·영수증 위 영어 필기체 제목
-var SUB_TITLE     = '털모자 쓰고 찰칵, 시 하나 추천 선물';  // 화면 부제 (영수증에는 안 나옴)
+var SUB_TITLE     = '털모자·목도리 하고 찰칵, 시 하나 추천 선물';  // 화면 부제 (영수증에는 안 나옴)
 var END_LINE      = 'Stay Warm, Read a Poem';          // 영수증 아래 필기체 문구
 var WARMER_HEAD   = '마음 손난로 1매 · 시 하나 추천 선물';  // 영수증 포장 표시 제목
 /* 영수증의 손난로 포장 표시 — [항목, 내용] 자유롭게 바꾸세요 */
@@ -984,11 +984,14 @@ function drawCover(ctx,src,sw,sh,W,H,mirror){
  ctx.drawImage(src,(sw-cw)/2,(sh-ch)/2,cw,ch,0,0,W,H);ctx.restore();
 }
 
-/* ---------------- 빨강 털모자 ----------------
+/* ---------------- 빨강 털모자 + 목도리 ----------------
    좌표는 사진 비율(0~1): x=얼굴 가운데, y=이마 윗선, w=너비 */
 var hats=[],autoMode=true,dragging=null,selHat=-1;
 function resetHats(){hats=[{x:.5,y:.33,w:.3}];selHat=0;}
-function santaHat(x,cx,by,w){   // 빨강 털모자 (by=모자 테두리 가운데, w=너비)
+var HAT_SCALE = 0.8;   // 털모자 크기 (1=원래 크기, 0.8=20% 작게)
+function santaHat(x,cx,by,fw){   // 빨강 털모자 + 목도리 세트 (by=모자 테두리 가운데, fw=얼굴 기준 너비)
+ scarf(x,cx,by,fw);
+ var w=fw*HAT_SCALE;
  x.save();
  // 몸통(둥근 돔)
  x.fillStyle='#c62828';x.beginPath();
@@ -1012,7 +1015,25 @@ function santaHat(x,cx,by,w){   // 빨강 털모자 (by=모자 테두리 가운�
  x.fillStyle='rgba(0,0,0,.08)';x.beginPath();x.arc(cx+pr*.25,py+pr*.25,pr*.5,0,7);x.fill();
  x.restore();
 }
-function hatBox(h,W,H){var w=h.w*W,cx=h.x*W,by=h.y*H;return {l:cx-w*.56,r:cx+w*.56,t:by-w*.86,b:by+w*.13};}
+function scarf(x,cx,by,w){   // 목도리: 얼굴 아래 목 둘레 + 한쪽으로 늘어진 끝자락
+ var top=by+w*.62,th=w*.2,half=w*.5;
+ x.save();x.lineJoin='round';
+ // 늘어진 끝자락 (오른쪽)
+ var tx=cx+w*.14,tw=w*.2,tl=w*.62,ty=top+th*.6;
+ x.fillStyle='#b71c1c';x.beginPath();x.moveTo(tx,ty);x.lineTo(tx+tw,ty-w*.02);x.lineTo(tx+tw+w*.04,ty+tl);x.lineTo(tx+w*.03,ty+tl+w*.02);x.closePath();x.fill();
+ x.fillStyle='#f3f0ec';[.45,.62].forEach(function(f){var yy=ty+tl*f;x.beginPath();x.moveTo(tx+w*.01+f*w*.02,yy);x.lineTo(tx+tw+f*w*.04,yy-w*.01);x.lineTo(tx+tw+f*w*.04+w*.003,yy+w*.05);x.lineTo(tx+w*.012+f*w*.02,yy+w*.06);x.closePath();x.fill();});
+ x.strokeStyle='#f3f0ec';x.lineWidth=Math.max(1.5,w*.018);x.lineCap='round';   // 술
+ for(var k=0;k<6;k++){var fx=tx+w*.04+k*(tw-w*.01)/5,fy=ty+tl+w*.01-k*w*.004;x.beginPath();x.moveTo(fx,fy);x.lineTo(fx+w*.005,fy+w*.08);x.stroke();}
+ // 목 둘레
+ x.fillStyle='#c62828';x.beginPath();
+ x.moveTo(cx-half,top);x.quadraticCurveTo(cx,top+w*.16,cx+half,top);
+ x.lineTo(cx+half*.96,top+th);x.quadraticCurveTo(cx,top+th+w*.2,cx-half*.96,top+th);x.closePath();x.fill();
+ x.strokeStyle='rgba(120,10,10,.45)';x.lineWidth=Math.max(1,w*.012);   // 뜨개 골
+ for(var i=-4;i<=4;i++){var ux=cx+i*half/4.6,o=(1-Math.pow(i/4.6,2))*w*.08;x.beginPath();x.moveTo(ux,top+o);x.lineTo(ux,top+th+o*1.25);x.stroke();}
+ x.fillStyle='rgba(0,0,0,.14)';x.beginPath();x.moveTo(cx-half*.96,top+th);x.quadraticCurveTo(cx,top+th+w*.2,cx+half*.96,top+th);x.quadraticCurveTo(cx,top+th+w*.12,cx-half*.96,top+th);x.fill();
+ x.restore();
+}
+function hatBox(h,W,H){var w=h.w*W,cx=h.x*W,by=h.y*H;return {l:cx-w*.56,r:cx+w*.56,t:by-w*.86*HAT_SCALE,b:by+w*1.4};}
 function drawHats(ctx,W,H){hats.forEach(function(h){santaHat(ctx,h.x*W,h.y*H,h.w*W);});}
 var ov=$('overlay'),ovx=ov.getContext('2d');
 function sizeOverlay(){var r=ov.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);var w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);if(ov.width!==w||ov.height!==h){ov.width=w;ov.height=h;}}
